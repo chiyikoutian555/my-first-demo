@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>想钊钊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe8f4, #e0eaff);
+            font-family: "Microsoft Yahei", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding:20px;
+            overflow-x:hidden;
+        }
+        .card {
+            background-color: #fff;
+            max-width:540px;
+            width:100%;
+            padding:45px 32px;
+            border-radius:30px;
+            box-shadow: 0 8px 24px #d8b8d880;
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+            transition: 0.4s;
+        }
+        /* 悬浮发光效果 */
+        .card:hover{
+            box-shadow: 0 0 30px #f2b8dd, 0 10px 30px #d8b8d880;
+        }
+        .pet-deco-top{
+            position:absolute;
+            top:14px;
+            left:18px;
+            font-size:44px;
+        }
+        .pet-deco-bottom{
+            position:absolute;
+            bottom:14px;
+            right:18px;
+            font-size:44px;
+        }
+        h1{
+            font-size:46px;
+            color:#d478b2;
+            margin-bottom:22px;
+        }
+        .text-content{
+            font-size:19px;
+            color:#664460;
+            line-height:2.1;
+            margin-bottom:26px;
+        }
+        .emoji-box{
+            font-size:28px;
+            margin:24px 0;
+            letter-spacing:7px;
+        }
+        .tip{
+            background:#fff0f8;
+            padding:15px 20px;
+            border-radius:18px;
+            font-size:16px;
+            color:#995580;
+        }
+        /* 卡片浮动 */
+        @keyframes float {
+            0%{transform: translateY(0px);}
+            50%{transform: translateY(-10px);}
+            100%{transform: translateY(0px);}
+        }
+        .float-animate{
+            animation: float 3.2s ease-in-out infinite;
+        }
+        /* 飘落星星花瓣 */
+        .fall-item{
+            position:fixed;
+            top:-50px;
+            pointer-events:none;
+            z-index:0;
+            animation: fall linear;
+        }
+        @keyframes fall {
+            0% {transform: translateY(0) rotate(0deg); opacity:1;}
+            100% {transform: translateY(100vh) rotate(360deg); opacity:0;}
+        }
+        /* 点击弹出表情 */
+        .click-emoji{
+            position:fixed;
+            pointer-events:none;
+            font-size:32px;
+            z-index:999;
+            animation: popUp 1s ease-out forwards;
+        }
+        @keyframes popUp{
+            0%{opacity:1;transform:translateY(0) scale(1);}
+            100%{opacity:0;transform:translateY(-120px) scale(1.4);}
+        }
+    </style>
+</head>
+<body>
+    <div class="card float-animate">
+        <div class="pet-deco-top">🐱</div>
+        <div class="pet-deco-bottom">🐶</div>
+
+        <h1>想钊钊</h1>
+
+        <div class="text-content">
+            世界乱糟糟<br>
+            小狗陪你慢慢走 ✧˖°<br>
+            岁岁平安，万事顺遂<br>
+            要天天开心哦(๑>؂<๑)۶
+        </div>
+
+        <div class="emoji-box">
+            🍡 🐾 🧸 🌷 ✨
+        </div>
+
+        <div class="tip">
+            点击屏幕会冒出小动物ヽ(≧∀≦)ﾉ
+        </div>
+    </div>
+
+<script>
+// 飘落星星花瓣
+const fallList = ['✨','🌸','💫','🍬','🌷','⭐'];
+function createFall(){
+    const el = document.createElement('div');
+    el.className = 'fall-item';
+    el.innerText = fallList[Math.floor(Math.random()*fallList.length)];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.fontSize = (12 + Math.random()*22)+'px';
+    const dur = 6 + Math.random()*8;
+    el.style.animationDuration = dur+'s';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), dur*1000);
+}
+setInterval(createFall,450);
+
+//点击屏幕冒出猫狗表情
+const clickEmojis = ['🐱','🐶','🐾','💖','🥺','💌','🧸'];
+document.addEventListener('click',e=>{
+    const sp = document.createElement('div');
+    sp.className = 'click-emoji';
+    sp.innerText = clickEmojis[Math.floor(Math.random()*clickEmojis.length)];
+    sp.style.left = e.clientX+'px';
+    sp.style.top = e.clientY+'px';
+    document.body.appendChild(sp);
+    setTimeout(()=>sp.remove(),1000);
+})
+</script>
+</body>
+</html>
